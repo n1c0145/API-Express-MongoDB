@@ -5,6 +5,10 @@ const path = require('path');
 
 const app = express();
 
+// Db connection
+db();
+//app.use(cors())
+
 // Settings 
 app.set('port', process.env.PORT || 3000);
 
