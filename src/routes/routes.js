@@ -1,44 +1,76 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
 
 //Model
 
-const Model = require('../models/model')
+const Model = require("../models/model");
 
-// GET all 
-router.get('/', async (req, res) => {
+// GET all
+
+router.get("/", async (req, res) => {
+  try {
     const data = await Model.find();
+    res.status(200);
     res.json(data);
-  });
-  
-// GET one 
-router.get('/:id', async (req, res) => {
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Error");
+  }
+});
+
+// GET one
+router.get("/:id", async (req, res) => {
+  try {
     const data = await Model.findById(req.params.id);
+    res.status(200);
     res.json(data);
-  });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Error");
+  }
+});
 
-  // ADD a new 
-  
-router.post('/', async (req, res) => {
+// ADD a new
+
+router.post("/", async (req, res) => {
+  try {
     const { title, description } = req.body;
-    const data = new Model({title, description});
+    const data = new Model({ title, description });
     await data.save();
-    res.json({status: 'Saved'});
-  });
+    res.status(201);
+    res.json({ status: "Created" });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Error");
+  }
+});
 
-// UPDATE 
-router.put('/:id', async (req, res) => {
+// UPDATE
+router.put("/:id", async (req, res) => {
+  try {
     const { title, description } = req.body;
-    const newData = {title, description};
+    const newData = { title, description };
     await Model.findByIdAndUpdate(req.params.id, newData);
-    res.json({status: 'Updated'});
-  });
+    res.status(200);
+    res.json({ status: "Updated" });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Error");
+  }
+});
 
-  //Delete
+//Delete
 
-  router.delete('/:id', async (req, res) => {
+router.delete("/:id", async (req, res) => {
+  try {
     await Model.findByIdAndRemove(req.params.id);
-    res.json({status: 'Task Deleted'});
-  });
+    res.status(200);
 
-  module.exports = router;
+    res.json({ status: "Deleted" });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Error");
+  }
+});
+
+module.exports = router;
