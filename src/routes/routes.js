@@ -13,8 +13,7 @@ router.get("/", async (req, res) => {
     res.status(200);
     res.json(data);
   } catch (error) {
-    console.log(error);
-    res.status(500).send("Error");
+    res.status(500).send({message:"Error"});
   }
 });
 
@@ -25,8 +24,7 @@ router.get("/:id", async (req, res) => {
     res.status(200);
     res.json(data);
   } catch (error) {
-    console.log(error);
-    res.status(500).send("Error");
+    res.status(500).send({message:"Error"});
   }
 });
 
@@ -40,8 +38,7 @@ router.post("/", async (req, res) => {
     res.status(201);
     res.json({ status: "Created" });
   } catch (error) {
-    console.log(error);
-    res.status(500).send("Error");
+    res.status(500).send({message:"Error"});
   }
 });
 
@@ -54,8 +51,7 @@ router.put("/:id", async (req, res) => {
     res.status(200);
     res.json({ status: "Updated" });
   } catch (error) {
-    console.log(error);
-    res.status(500).send("Error");
+    res.status(500).send({message:"Error"});
   }
 });
 
@@ -65,11 +61,9 @@ router.delete("/:id", async (req, res) => {
   try {
     await Model.findByIdAndRemove(req.params.id);
     res.status(200);
-
     res.json({ status: "Deleted" });
   } catch (error) {
-    console.log(error);
-    res.status(500).send("Error");
+    res.status(500).send({message:"Error"});
   }
 });
 
